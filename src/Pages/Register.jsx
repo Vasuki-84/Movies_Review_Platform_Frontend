@@ -52,6 +52,10 @@ function Register() {
         <div className="mb-6">
           <label className="block text-gray-300 mb-1">Role</label>
           <select className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400">
+            <option value=" " disabled>
+              {" "}
+              choose your role
+            </option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
