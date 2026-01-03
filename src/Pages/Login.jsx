@@ -20,10 +20,19 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${baseUrl}/admin/login`, form);
-      localStorage.setItem("token", response.data.token);
-      navigate("/movies");
+      const response = await axios.post(`${baseUrl}/user/login`, form);
+      const { token, user } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role);
+
+      if (user.role === "admin") {
+        navigate("/movies");
+      } else {
+        navigate("/review");
+      }
     } catch (err) {
+      console.error(err.response?.data || err.message);
       alert("Login error");
     }
   };
@@ -67,7 +76,10 @@ function Login() {
             </button>
           </div>
 
-          <button className="w-full bg-red-500 text-black py-2 rounded font-semibold hover:bg-red-600 transition" type="submit">
+          <button
+            className="w-full bg-red-500 text-black py-2 rounded font-semibold hover:bg-red-600 transition"
+            type="submit"
+          >
             Login
           </button>
         </form>
