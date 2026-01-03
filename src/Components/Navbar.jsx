@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -14,50 +15,42 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 text-white px-6 py-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">🎬 CineRate</h1>
+    <nav className="absolute top-0 left-0 w-full z-50">
+      <div className="flex items-center justify-between px-6 md:px-12 py-4 bg-black/40 backdrop-blur-md text-white">
+        <h1 className="text-2xl font-bold tracking-wide">
+          <span className="text-red-600">CINE</span>BUZZ
+        </h1>
 
-        <ul className="hidden md:flex space-x-6">
+        <ul className="hidden md:flex items-center gap-8 text-sm font-semibold">
           <li>
-            <Link to="/" className="hover:text-red-400">
-              Home
+            <Link to="/" className="text-red-500">
+              HOME
             </Link>
           </li>
-
           <li>
-            <Link to="/movies" className="hover:text-red-400">
-              Movies
+            <Link to="/movies" className="hover:text-red-500">
+              MOVIES
             </Link>
           </li>
-
-          {!isLoggedIn ? (
-            <>
-              <li>
-                <Link to="/login" className="hover:text-red-400">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register"
-                  className="bg-red-500 text-black px-3 py-1 rounded"
-                >
-                  Register
-                </Link>
-              </li>
-            </>
-          ) : (
-            <li>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 text-black px-3 py-1 rounded hover:bg-red-700"
-              >
-                Logout
-              </button>
-            </li>
-          )}
+          <li className="hover:text-red-500 cursor-pointer">TV SERIES</li>
+          <li className="hover:text-red-500 cursor-pointer">SEARCH</li>
         </ul>
+
+        {!isLoggedIn ? (
+          <Link
+            to="/login"
+            className="hidden md:block bg-red-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
+          >
+            LOG IN
+          </Link>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="hidden md:block bg-red-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
+          >
+            LOGOUT
+          </button>
+        )}
 
         <button
           className="md:hidden text-2xl"
@@ -68,50 +61,38 @@ function Navbar() {
       </div>
 
       {isOpen && (
-        <ul className="md:hidden mt-4 space-y-3">
-          <li>
-            <Link to="/" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-          </li>
+        <div className="md:hidden bg-black/90 text-white px-6 py-6 space-y-4">
+          <Link to="/" onClick={() => setIsOpen(false)} className="block">
+            HOME
+          </Link>
 
-          <li>
-            <Link to="/movies" onClick={() => setIsOpen(false)}>
-              Movies
-            </Link>
-          </li>
+          <Link to="/movies" onClick={() => setIsOpen(false)} className="block">
+            MOVIES
+          </Link>
+
+          <span className="block">TV SERIES</span>
+          <span className="block">SEARCH</span>
 
           {!isLoggedIn ? (
-            <>
-              <li>
-                <Link to="/login" onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register"
-                  className="block bg-yellow-400 text-black px-3 py-1 rounded"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Register
-                </Link>
-              </li>
-            </>
+            <Link
+              to="/login"
+              onClick={() => setIsOpen(false)}
+              className="block bg-red-600 text-center py-2 rounded-md font-semibold"
+            >
+              LOG IN
+            </Link>
           ) : (
-            <li>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                className="block bg-red-500 text-black px-3 py-1 rounded"
-              >
-                Logout
-              </button>
-            </li>
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsOpen(false);
+              }}
+              className="block w-full bg-red-600 py-2 rounded-md font-semibold"
+            >
+              LOGOUT
+            </button>
           )}
-        </ul>
+        </div>
       )}
     </nav>
   );

@@ -32,89 +32,96 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-white mb-6">
-          Create Account 🎬
-        </h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-1">Name</label>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="name"
-              placeholder="Enter your name"
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
+    <div className="min-h-screen flex bg-black text-white p-5">
+      <div className="w-full md:w-1/2 flex items-center justify-center px-6">
+        <div className="w-full max-w-md">
+          <h2 className="text-2xl font-semibold mb-8">SIGN UP</h2>
 
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-5">
+              <label className="block text-sm mb-2">Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter Name"
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              />
+            </div>
 
-          <div className="mb-4 relative">
-            <label className="block text-gray-300 mb-1">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
-              name="password"
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-            <span
-              className="absolute right-3 top-9 cursor-pointer text-gray-400 hover:text-white"
-              onClick={() => setShowPassword(!showPassword)}
+            <div className="mb-5">
+              <label className="block text-sm mb-2">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-5 relative">
+              <label className="block text-sm mb-2">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter Password"
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-11 text-gray-600"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5" />
+                ) : (
+                  <EyeIcon className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-sm mb-2">Role</label>
+              <select
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              >
+                <option value="" disabled>
+                  Choose role
+                </option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="bg-teal-500 hover:bg-teal-600 text-black font-semibold px-6 py-2 rounded"
             >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
-            </span>
-          </div>
+              Sign Up
+            </button>
+          </form>
 
-          <div className="mb-6">
-            <label className="block text-gray-300 mb-1">Role</label>
-            <select
-              onChange={handleChange}
-              name="role"
-              value={form.role}
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            >
-              <option value="" disabled>
-                choose your role
-              </option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-red-500 text-black py-2 rounded font-semibold hover:bg-red-600 transition"
-          >
-            Submit
-          </button>
-        </form>
-        <p className="text-center text-gray-400 mt-4 text-sm">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className=" font-semibold
-           text-red-400 hover:underline"
-          >
-            Login
-          </Link>
-        </p>
+          <p className="mt-6 text-sm text-gray-400">
+            Already have an account?{" "}
+            <Link to="/login" className="text-teal-400 hover:underline">
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
+
+      <div
+        className="hidden md:block md:w-1/2 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba')",
+        }}
+      />
     </div>
   );
 }

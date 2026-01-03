@@ -37,62 +37,69 @@ function Login() {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-white mb-6">
-          Login 🎬
-        </h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-1">Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              name="email"
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
+    <div className="min-h-screen flex bg-black text-white">
+      <div className="w-full md:w-1/2 flex items-center justify-center px-6">
+        <div className="w-full max-w-md">
+          <h2 className="text-3xl font-semibold mb-8">LOG IN</h2>
 
-          <div className="relative mb-6">
-            <label className="block text-gray-300 mb-1">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              name="password"
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label className="block text-sm mb-2">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              />
+            </div>
+
+            <div className="mb-6 relative">
+              <label className="block text-sm mb-2">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter Password"
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded bg-white text-black focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-11 text-gray-600"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5" />
+                ) : (
+                  <EyeIcon className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
             <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-9 cursor-pointer text-gray-400 hover:text-white"
+              type="submit"
+              className="bg-teal-500 hover:bg-teal-600 text-black font-semibold px-6 py-2 rounded"
             >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
+              Sign In
             </button>
-          </div>
+          </form>
 
-          <button
-            className="w-full bg-red-500 text-black py-2 rounded font-semibold hover:bg-red-600 transition"
-            type="submit"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-center text-gray-400 mt-4 text-sm">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className=" font-semibold text-red-400 hover:underline hover:font-bold"
-          >
-            Register
-          </Link>
-        </p>
+          <p className="mt-6 text-sm text-gray-400">
+            New User?{" "}
+            <Link to="/register" className="text-teal-400 hover:underline">
+              SIGNUP
+            </Link>
+          </p>
+        </div>
       </div>
+
+      <div
+        className="hidden md:block md:w-1/2 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4')",
+        }}
+      />
     </div>
   );
 }
