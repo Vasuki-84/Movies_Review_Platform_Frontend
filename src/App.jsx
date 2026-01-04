@@ -15,7 +15,6 @@ import Dashboard from "./Pages/admin/Dashboard";
 import CreateMovie from "./Pages/admin/CreateMovie";
 import UpdateMovie from "./Pages/admin/UpdateMovie";
 import Reviews from "./Pages/admin/Reviews";
-import AdminSidebar from "./Components/AdminSidebar";
 
 function App() {
   return (
@@ -29,9 +28,8 @@ function App() {
         <Route path="/movies" element={<MovieDetails />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin/sidebar" element={<AdminSidebar/>}/>
 
-        {/* ADMIN ROUTES WITH LAYOUT */}
+        {/* ADMIN ROUTES  */}
         <Route path="/admin/layout" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />          
           <Route path="create" element={<CreateMovie />} /> 

@@ -13,7 +13,7 @@ export default function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const moviesRes = await axios.get(`${baseUrl}/movie`);
-      const reviewsRes = await axios.get(`${baseUrl}/review`);
+      const reviewsRes = await axios.get(`${baseUrl}/review/add`);
 
       setMovies(moviesRes.data);
       setReviews(reviewsRes.data);
@@ -24,10 +24,8 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 text-white">
-      {/* ===== DASHBOARD TITLE ===== */}
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
-      {/* ===== STATS CARDS ===== */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 rounded-xl">
           <h3 className="text-lg">Movies</h3>
@@ -45,7 +43,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ===== MOVIES LIST ===== */}
       <h2 className="text-2xl font-semibold mb-4">Top Content</h2>
 
       <div className="space-y-4">
