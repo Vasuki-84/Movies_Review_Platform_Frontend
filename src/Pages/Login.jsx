@@ -27,7 +27,7 @@ function Login() {
       localStorage.setItem("role", user.role);
 
       if (user.role === "admin") {
-        navigate("/movies");
+        navigate("/admin/layout");
       } else {
         navigate("/review");
       }
