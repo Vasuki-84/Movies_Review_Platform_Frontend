@@ -23,10 +23,10 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 text-white">
+    <div className="p-6 text-white mt-10">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3  gap-6 mb-10">
         <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 rounded-xl">
           <h3 className="text-lg">Movies</h3>
           <p className="text-4xl font-bold">{movies.length}</p>
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
         <div className="bg-gradient-to-r from-blue-400 to-blue-600 p-6 rounded-xl">
           <h3 className="text-lg">Users</h3>
-          <p className="text-4xl font-bold">—</p>
+          <p className="text-4xl font-bold">0</p>
         </div>
       </div>
 

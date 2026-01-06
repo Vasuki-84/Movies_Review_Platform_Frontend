@@ -60,13 +60,13 @@ function Home() {
         <span className="border-b-4 border-red-600 pb-0">POPULAR MOVIES</span>
       </h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center ">
         {movies.map((movie) => (
-          <div key={movie.id} className="relative group w-[160px] md:w-[200px]">
+          <div key={movie.id} className="relative group w-[200px] md:w-[200px] ">
             <img
               src={movie.image}
               alt={movie.title}
-              className="rounded-lg w-full h-[240px] object-cover group-hover:scale-105 transition duration-300"
+              className="rounded-lg w-full h-[300px] object-cover group-hover:scale-105 transition duration-300"
             />
 
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-3 rounded-lg">
