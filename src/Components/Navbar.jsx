@@ -15,7 +15,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="absolute top-0 left-0 w-full z-50">
+    <nav className="absolute top-0 left-0 w-full z-50 fixed  top-0">
       <div className="flex items-center justify-between px-6 md:px-12 py-4 bg-black/40 backdrop-blur-md text-white">
         <h1 className="text-2xl font-bold tracking-wide">
           <span className="text-red-600">CINE</span>BUZZ

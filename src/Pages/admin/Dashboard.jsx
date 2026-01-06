@@ -13,7 +13,7 @@ export default function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const moviesRes = await axios.get(`${baseUrl}/movie`);
-      const reviewsRes = await axios.get(`${baseUrl}/review/add`);
+      const reviewsRes = await axios.get(`${baseUrl}/review/get`);
 
       setMovies(moviesRes.data);
       setReviews(reviewsRes.data);
@@ -53,18 +53,18 @@ export default function Dashboard() {
           >
             <div className="flex items-center gap-4">
               <img
-                src={movie.image || "https://via.placeholder.com/60x80"}
-                alt={movie.name}
+                src={movie.posterImage || "https://via.placeholder.com/60x80"}
+                alt={movie.movieName}
                 className="w-14 h-20 object-cover rounded"
               />
               <div>
-                <h3 className="font-semibold">{movie.name}</h3>
-                <p className="text-sm text-gray-400">{movie.year}</p>
+                <h3 className="font-semibold">{movie.movieName}</h3>
+                <p className="text-sm text-gray-400">{movie.releaseDate}</p>
               </div>
             </div>
 
-            <div className="text-gray-300">
-              Reviews:{" "}
+            <div className="text-gray-300 font-bold">
+              Reviews :{" "}
               {
                 reviews.filter(
                   (r) => r.movieId === movie._id || r.movieId?._id === movie._id
