@@ -23,7 +23,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 text-white mt-10">
+    <div className="p-6 text-white mt-10 bg-black">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3  gap-6 mb-10">
@@ -60,6 +60,7 @@ export default function Dashboard() {
               <div>
                 <h3 className="font-semibold">{movie.movieName}</h3>
                 <p className="text-sm text-gray-400">{movie.releaseDate}</p>
+                <p className="text-sm text-gray-400">{movie.country}</p>
               </div>
             </div>
 

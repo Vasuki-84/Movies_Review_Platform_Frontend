@@ -19,7 +19,7 @@ export default function AdminLayout() {
 
       {/* sidebar */}
       <div
-        className={`fixed  top-0 left-0 z-30 h-screen w-64 bg-gray-800 text-white p-5  transform transition-transform 
+        className={`fixed  top-0 left-0 z-30 h-screen w-64  text-white p-5  transform transition-transform 
         ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }  md:translate-x-0 `}
@@ -27,7 +27,7 @@ export default function AdminLayout() {
         <AdminSidebar closeSidebar={() => setSidebarOpen(false)} />
       </div>
 
-      <div className="flex-1 flex flex-col min-h-screen  md:ml-64 bg-gray-900 text-white">
+      <div className="flex-1 flex flex-col min-h-screen  md:ml-64  text-white">
         <div
           className=" fixed top-16 left-0 right-0 z-20 md:hidden lg:hidden
           flex items-center justify-between bg-gray-900 p-4"

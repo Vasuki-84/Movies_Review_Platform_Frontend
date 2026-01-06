@@ -3,8 +3,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 export default function AdminSidebar({ closeSidebar }) {
   return (
-    <div className=" h-full bg-black text-white p-5 mt-10 ">
-      <div className="flex items-center justify-between mb-6 md:hidden">
+    <div className=" h-full bg-gray-900 text-white p-5 mt-10 rounded-r-lg  ">
+      <div className="flex items-center justify-between mb-6 md:hidden ">
         <h2 className="text-xl font-bold">Admin</h2>
         <button
           onClick={closeSidebar}
@@ -27,7 +27,7 @@ export default function AdminSidebar({ closeSidebar }) {
       <Link
         to={item.path}
         className="
-          block px-4 py-2 rounded-lg
+          block px-4 py-2 rounded-r-2xl
           text-gray-300
           hover:bg-white hover:text-black
           transition-all duration-200

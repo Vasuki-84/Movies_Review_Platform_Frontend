@@ -15,6 +15,7 @@ import Dashboard from "./Pages/admin/Dashboard";
 import CreateMovie from "./Pages/admin/CreateMovie";
 import UpdateMovie from "./Pages/admin/UpdateMovie";
 import Reviews from "./Pages/admin/Reviews";
+import UpdateMovieForm from "./Pages/admin/UpdateMovieForm";
 
 function App() {
   return (
@@ -31,10 +32,14 @@ function App() {
 
         {/* ADMIN ROUTES  */}
         <Route path="/admin/layout" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />          
-          <Route path="create" element={<CreateMovie />} /> 
+          <Route index element={<Dashboard />} />
+          <Route path="create" element={<CreateMovie />} />
           <Route path="update" element={<UpdateMovie />} />
-          <Route path="reviews" element={<Reviews />} />    
+          <Route path="reviews" element={<Reviews />} />
+          <Route
+            path="/admin/layout/update/:id"
+            element={<UpdateMovieForm />}
+          />
         </Route>
       </Routes>
 
