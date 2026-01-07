@@ -4,17 +4,16 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 
 import Home from "./Pages/Home";
-import AddReviews from "./Pages/AddReviews";
 import MovieDetails from "./Pages/MovieDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
+import Reviews from "./Pages/Reviews"
 
 // Admin pages & layout
 import AdminLayout from "./Pages/admin/AdminLayout";
 import Dashboard from "./Pages/admin/Dashboard";
 import CreateMovie from "./Pages/admin/CreateMovie";
 import UpdateMovie from "./Pages/admin/UpdateMovie";
-import Reviews from "./Pages/admin/Reviews";
 import UpdateMovieForm from "./Pages/admin/UpdateMovieForm";
 
 function App() {
@@ -25,17 +24,17 @@ function App() {
       <Routes>
         {/* USER ROUTES */}
         <Route path="/" element={<Home />} />
-        <Route path="/review" element={<AddReviews />} />
         <Route path="/movies" element={<MovieDetails />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/review" element={<Reviews />} />
 
         {/* ADMIN ROUTES  */}
         <Route path="/admin/layout" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="create" element={<CreateMovie />} />
           <Route path="update" element={<UpdateMovie />} />
-          <Route path="reviews" element={<Reviews />} />
+
           <Route
             path="/admin/layout/update/:id"
             element={<UpdateMovieForm />}
