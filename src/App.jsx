@@ -7,7 +7,7 @@ import Home from "./Pages/Home";
 import MovieDetails from "./Pages/MovieDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import Reviews from "./Pages/Reviews"
+import Reviews from "./Pages/Reviews";
 
 // Admin pages & layout
 import AdminLayout from "./Pages/admin/AdminLayout";
@@ -27,7 +27,7 @@ function App() {
         <Route path="/movies" element={<MovieDetails />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/review" element={<Reviews />} />
+        <Route path="/review/:id" element={<Reviews />} />
 
         {/* ADMIN ROUTES  */}
         <Route path="/admin/layout" element={<AdminLayout />}>

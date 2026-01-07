@@ -29,7 +29,7 @@ function Login() {
       if (user.role === "admin") {
         navigate("/admin/layout");
       } else {
-        navigate("/review");
+        navigate("/review/:id");
       }
     } catch (err) {
       console.error(err.response?.data || err.message);

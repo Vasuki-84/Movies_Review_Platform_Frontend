@@ -1,21 +1,30 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const isLoggedIn = !!localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  const username = localStorage.getItem("name");
+  const isLoggedIn = !!token;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("name");
     navigate("/login");
   };
 
+  const handleUserButton = () => {
+    if (role === "admin") {
+      navigate("/admin/layout");
+    }
+  };
+
   return (
-    <nav className="absolute top-0 left-0 w-full z-50 fixed  top-0">
+    <nav className="absolute top-0 left-0 w-full z-50 fixed">
       <div className="flex items-center justify-between px-6 md:px-12 py-4 bg-black/40 backdrop-blur-md text-white">
         <h1 className="text-2xl font-bold tracking-wide">
           <span className="text-red-600">CINE</span>BUZZ
@@ -44,12 +53,23 @@ function Navbar() {
             LOG IN
           </Link>
         ) : (
-          <button
-            onClick={handleLogout}
-            className="hidden md:block bg-red-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
-          >
-            LOGOUT
-          </button>
+          <div className="hidden md:flex items-center gap-4">
+            {isLoggedIn && role === "admin" && (
+              <button
+                onClick={handleUserButton}
+                className="bg-blue-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition"
+              >
+                {username || "Admin"}
+              </button>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
+            >
+              LOGOUT
+            </button>
+          </div>
         )}
 
         <button
@@ -65,11 +85,9 @@ function Navbar() {
           <Link to="/" onClick={() => setIsOpen(false)} className="block">
             HOME
           </Link>
-
           <Link to="/movies" onClick={() => setIsOpen(false)} className="block">
             MOVIES
           </Link>
-
           <span className="block">TV SERIES</span>
           <span className="block">SEARCH</span>
 
@@ -82,15 +100,27 @@ function Navbar() {
               LOG IN
             </Link>
           ) : (
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsOpen(false);
-              }}
-              className="block w-full bg-red-600 py-2 rounded-md font-semibold"
-            >
-              LOGOUT
-            </button>
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  handleUserButton();
+                  setIsOpen(false);
+                }}
+                className="block w-full bg-blue-600 py-2 rounded-md font-semibold"
+              >
+                {username || (role === "admin" ? "Admin" : "User")}
+              </button>
+
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="block w-full bg-red-600 py-2 rounded-md font-semibold"
+              >
+                LOGOUT
+              </button>
+            </div>
           )}
         </div>
       )}
