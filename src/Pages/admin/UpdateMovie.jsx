@@ -30,7 +30,7 @@ export default function UpdateMovie() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 mt-20">
+    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 mt-20 bg-white/10 backdrop-blur-lg rounded p-6 ">
       <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
         Update \ Delete Movies
       </h2>

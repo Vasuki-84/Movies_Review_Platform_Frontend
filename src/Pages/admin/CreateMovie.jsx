@@ -46,8 +46,8 @@ export default function CreateMovie() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4 md:p-8 mt-20 ">
-      <div className="w-full max-w-xl bg-gray-800 rounded-xl shadow-lg p-6 md:p-10 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-black p-4 md:p-8 mt-18 ">
+      <div className="w-full max-w-3xl bg-black rounded-xl shadow-lg p-6 md:p-10 text-white bg-white/10 backdrop-blur-lg rounded p-6 ">
         <h2 className="text-2xl font-bold mb-6 text-center">Create Movie</h2>
 
         {/* Movie Name */}

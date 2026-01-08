@@ -42,7 +42,7 @@ function Navbar() {
             </Link>
           </li>
           <li className="hover:text-red-500 cursor-pointer">TV SERIES</li>
-          <li className="hover:text-red-500 cursor-pointer">SEARCH</li>
+         
         </ul>
 
         {!isLoggedIn ? (

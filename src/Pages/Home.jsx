@@ -13,6 +13,7 @@ function Home() {
   const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchMovies();
@@ -42,16 +43,19 @@ function Home() {
   ];
 
   const genres = [...new Set(movies.map((m) => m.genre).filter(Boolean))];
-  const languages = [
-    ...new Set(movies.map((m) => m.language).filter(Boolean)),
-  ];
+  const languages = [...new Set(movies.map((m) => m.language).filter(Boolean))];
 
   const filteredMovies = movies.filter((movie) => {
     const movieYear = movie.releaseDate
       ? new Date(movie.releaseDate).getFullYear().toString()
       : "";
 
+    const matchesSearch = movie.movieName
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
     return (
+      matchesSearch &&
       (!year || movieYear === year) &&
       (!genre || movie.genre === genre) &&
       (!language || movie.language === language)
@@ -61,12 +65,28 @@ function Home() {
   return (
     <div className="bg-black min-h-screen py-6 text-white">
       <HeroSection />
+      <div className="flex justify-center px-20 mt-6">
+        <input
+          type="text"
+          placeholder="Search movies..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="
+      w-full sm:w-[800px]
+      bg-gray-800 text-white
+      px-4 py-2
+      rounded-lg
+      outline-none
+      focus:ring-2 focus:ring-red-500
+    "
+        />
+      </div>
 
       <div className="flex flex-wrap gap-4 justify-center mt-10 mb-8 px-4">
         <select
           value={year}
           onChange={(e) => setYear(e.target.value)}
-          className="bg-gray-800 text-white px-4 py-2 rounded outline-none"
+          className="bg-gray-800 text-white px-4 py-2 rounded outline-none focus:ring-2 focus:ring-red-500"
         >
           <option value="">All Years</option>
           {years.map((y) => (
@@ -79,7 +99,7 @@ function Home() {
         <select
           value={genre}
           onChange={(e) => setGenre(e.target.value)}
-          className="bg-gray-800 text-white px-4 py-2 rounded outline-none"
+          className="bg-gray-800 text-white px-4 py-2 rounded outline-none focus:ring-2 focus:ring-red-500"
         >
           <option value="">All Genres</option>
           {genres.map((g) => (
@@ -92,7 +112,7 @@ function Home() {
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="bg-gray-800 text-white px-4 py-2 rounded outline-none"
+          className="bg-gray-800 text-white px-4 py-2 rounded outline-none focus:ring-2 focus:ring-red-500"
         >
           <option value="">All Languages</option>
           {languages.map((l) => (
@@ -104,9 +124,7 @@ function Home() {
       </div>
 
       {loading && (
-        <p className="text-center text-gray-400 mt-10">
-          Loading movies...
-        </p>
+        <p className="text-center text-gray-400 mt-10">Loading movies...</p>
       )}
 
       {!loading && (
@@ -124,10 +142,7 @@ function Home() {
               }}
             >
               <img
-                src={
-                  movie.posterImage ||
-                  "https://via.placeholder.com/300x450"
-                }
+                src={movie.posterImage || "https://via.placeholder.com/300x450"}
                 alt={movie.movieName}
                 className="rounded-lg w-full h-[300px] object-cover
                   transition duration-300 group-hover:scale-105"
@@ -138,9 +153,7 @@ function Home() {
                 group-hover:opacity-100 transition
                 flex flex-col justify-end p-3 rounded-lg"
               >
-                <h3 className="text-sm font-semibold">
-                  {movie.movieName}
-                </h3>
+                <h3 className="text-sm font-semibold">{movie.movieName}</h3>
 
                 <p className="text-xs text-gray-300">
                   {movie.releaseDate &&
@@ -149,9 +162,7 @@ function Home() {
                 </p>
 
                 {movie.rating && (
-                  <p className="text-xs text-green-400">
-                    ⭐ {movie.rating}
-                  </p>
+                  <p className="text-xs text-green-400">⭐ {movie.rating}</p>
                 )}
 
                 {!isLoggedIn && (

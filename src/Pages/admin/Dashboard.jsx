@@ -64,7 +64,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="text-gray-300 font-bold">
+            <div className="text-white font-bold">
               Reviews :{" "}
               {
                 reviews.filter(
