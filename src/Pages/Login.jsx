@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { baseUrl } from "../api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,14 +28,24 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("role", user.role);
 
-      if (user.role === "admin") {
-        navigate("/admin/layout");
-      } else {
-        navigate("/review/:id");
-      }
+      toast.success(" Login successful!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        if (user.role === "admin") {
+          navigate("/admin/layout");
+        } else {
+          navigate("/review/:id");
+        }
+      }, 2000);
     } catch (err) {
       console.error(err.response?.data || err.message);
-      alert("Login error");
+      toast.error("❌ Login failed! Invalid email or password", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
   return (
@@ -80,14 +92,14 @@ function Login() {
               type="submit"
               className="bg-teal-500 hover:bg-teal-600 text-black font-semibold px-6 py-2 rounded"
             >
-              Sign In
+              Log In
             </button>
           </form>
 
           <p className="mt-6 text-sm text-gray-400">
             New User?{" "}
             <Link to="/register" className="text-teal-400 hover:underline">
-              SIGNUP
+              Sign Up
             </Link>
           </p>
         </div>

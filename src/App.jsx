@@ -16,6 +16,9 @@ import CreateMovie from "./Pages/admin/CreateMovie";
 import UpdateMovie from "./Pages/admin/UpdateMovie";
 import UpdateMovieForm from "./Pages/admin/UpdateMovieForm";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <div>
@@ -43,6 +46,17 @@ function App() {
       </Routes>
 
       <Footer />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="dark"
+      />
     </div>
   );
 }
