@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { baseUrl } from "../../api";
+import { toast } from "react-toastify";
 
 export default function UpdateMovieForm() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState({
     movieName: "",
     posterImage: "",
@@ -16,113 +22,131 @@ export default function UpdateMovieForm() {
     country: "",
   });
 
-  // Fetch existing movie data
+  // Fetch movie
   useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const response = await axios.get(`${baseUrl}/movie/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setForm(response.data); // assuming API returns movie object
-      } catch (error) {
-        console.error("Fetch movie error:", error);
-      }
-    };
-
+    if (!id) return;
     fetchMovie();
   }, [id]);
 
-  // Update movie function
+  const fetchMovie = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/movie/get/${id}`);
+      const movie = res.data;
+
+      setForm({
+        movieName: movie.movieName || "",
+        posterImage: movie.posterImage || "",
+        releaseDate: movie.releaseDate ? movie.releaseDate.split("T")[0] : "",
+        language: movie.language || "",
+        duration: movie.duration || "",
+        genres: movie.genres || "",
+        description: movie.description || "",
+        country: movie.country || "",
+      });
+    } catch (error) {
+      console.error("Fetch movie error:", error);
+      alert("Failed to load movie data");
+    }
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // UPDATE movie
   const submit = async () => {
     try {
-      const token = localStorage.getItem("token");
       if (!token) {
-        alert("Please login as admin");
+        toast.error("Please Login as Admin", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         return;
       }
 
+      for (let key in form) {
+        if (!form[key]) {
+          toast.error("Please fill all the fields", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          return;
+        }
+      }
+
+      setLoading(true);
+
       await axios.put(`${baseUrl}/movie/update/${id}`, form, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      alert("Movie updated successfully");
+      toast.error("Movie updated Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      navigate("/admin/layout");
     } catch (error) {
-      console.error("Update movie error:", error);
+      toast.error("Movie updation failure", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4 md:p-8 mt-20">
-      <div className="w-full max-w-xl bg-gray-800 rounded-xl shadow-lg p-6 md:p-10 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-black p-4 mt-16">
+      <div className="w-full max-w-3xl bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-6 md:p-10 text-white">
         <h2 className="text-2xl font-bold mb-6 text-center">Update Movie</h2>
 
-        {/* Movie Name */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Movie Title
-        </label>
         <input
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="movieName"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
           placeholder="Movie Name"
           value={form.movieName}
-          onChange={(e) => setForm({ ...form, movieName: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Poster Image URL */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Poster Image
-        </label>
         <input
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="posterImage"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
           placeholder="Poster Image URL"
           value={form.posterImage}
-          onChange={(e) => setForm({ ...form, posterImage: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Release Date */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Release Date
-        </label>
         <input
           type="date"
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="releaseDate"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
           value={form.releaseDate}
-          onChange={(e) => setForm({ ...form, releaseDate: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Language */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Language
-        </label>
         <input
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="language"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
           placeholder="Language"
           value={form.language}
-          onChange={(e) => setForm({ ...form, language: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Duration */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Duration
-        </label>
         <input
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
-          placeholder="Duration (e.g., 2h 15m)"
+          name="duration"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
+          placeholder="Duration (e.g., 2h 30m)"
           value={form.duration}
-          onChange={(e) => setForm({ ...form, duration: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Genres */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Genres
-        </label>
         <select
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="genres"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700"
           value={form.genres}
-          onChange={(e) => setForm({ ...form, genres: e.target.value })}
+          onChange={handleChange}
         >
           <option value="">Select Genre</option>
           <option value="Action">Action</option>
@@ -132,34 +156,28 @@ export default function UpdateMovieForm() {
           <option value="Sci-Fi">Sci-Fi</option>
         </select>
 
-        {/* Description */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Description
-        </label>
         <textarea
-          className="w-full mb-4 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 h-32 resize-none"
+          name="description"
+          className="w-full mb-4 p-3 rounded-lg bg-gray-700 h-32 resize-none"
           placeholder="Description"
           value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Country */}
-        <label className="block mb-1 text-sm font-medium text-gray-300">
-          Country
-        </label>
         <input
-          className="w-full mb-6 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          name="country"
+          className="w-full mb-6 p-3 rounded-lg bg-gray-700"
           placeholder="Country"
           value={form.country}
-          onChange={(e) => setForm({ ...form, country: e.target.value })}
+          onChange={handleChange}
         />
 
-        {/* Submit Button */}
         <button
           onClick={submit}
-          className="w-full bg-teal-600 hover:bg-teal-700 transition-colors text-white font-semibold py-3 rounded-lg"
+          disabled={loading}
+          className="w-full bg-yellow-600 hover:bg-yellow-700 transition text-white font-semibold py-3 rounded-lg disabled:opacity-50"
         >
-          Update Movie
+          {loading ? "Updating..." : "Update Movie"}
         </button>
       </div>
     </div>

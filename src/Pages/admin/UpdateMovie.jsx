@@ -2,37 +2,87 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function UpdateMovie() {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchMovies();
   }, []);
 
+  // Fetch movie
   const fetchMovies = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/movie`);
+      const res = await axios.get(`${baseUrl}/movie/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       setMovies(res.data);
     } catch (error) {
       console.error("Fetch movies error:", error);
     }
   };
 
+  // Delete Movie
   const deleteMovie = async (id) => {
+     toast.error(
+    ({ closeToast }) => (
+      <div>
+        <p className="font-semibold mb-2">
+          Are you sure you want to delete this movie?
+        </p>
+        <div className="flex gap-2">
+          <button
+            onClick={async () => {
+              closeToast();
+              await confirmDelete(id);
+            }}
+            className="bg-red-600 px-3 py-1 rounded text-white text-sm"
+          >
+            Yes, Delete
+          </button>
+
+          <button
+            onClick={closeToast}
+            className="bg-gray-600 px-3 py-1 rounded text-white text-sm"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ),
+    {
+      position: "top-right",
+      autoClose: false,
+      closeOnClick: false,
+    }
+  );
     try {
-      await axios.delete(`${baseUrl}/movie/${id}`);
-      setMovies(movies.filter((movie) => movie._id !== id));
+      await axios.delete(`${baseUrl}/movie/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setMovies((prev) => prev.filter((movie) => movie._id !== id));
     } catch (error) {
       console.error("Delete movie error:", error);
+        toast.error("Failed to delete movie", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 mt-20 bg-white/10 backdrop-blur-lg rounded p-6 ">
+    <div className="min-h-screen bg-white/10 backdrop-blur-lg text-white p-4 md:p-8 mt-20 rounded">
       <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
-        Update \ Delete Movies
+        Update / Delete Movies
       </h2>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -77,7 +127,7 @@ export default function UpdateMovie() {
       </div>
 
       {movies.length === 0 && (
-        <p className="text-center text-gray-400 mt-10">No movies found</p>
+        <p className="text-center text-gray-400 mt-10">No movies found..</p>
       )}
     </div>
   );

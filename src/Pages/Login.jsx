@@ -90,7 +90,7 @@ function Login() {
 
             <button
               type="submit"
-              className="bg-teal-500 hover:bg-teal-600 text-black font-semibold px-6 py-2 rounded"
+              className="bg-teal-500 hover:bg-teal-600 text-black font-semibold px-6 py-2 rounded hover:pointer"
             >
               Log In
             </button>
@@ -98,7 +98,7 @@ function Login() {
 
           <p className="mt-6 text-sm text-gray-400">
             New User?{" "}
-            <Link to="/register" className="text-teal-400 hover:underline">
+            <Link to="/register" className="text-teal-400 hover:underline ">
               Sign Up
             </Link>
           </p>

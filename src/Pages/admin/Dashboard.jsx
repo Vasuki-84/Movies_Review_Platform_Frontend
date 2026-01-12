@@ -5,6 +5,9 @@ import { baseUrl } from "../../api";
 export default function Dashboard() {
   const [movies, setMovies] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchDashboardData();
@@ -12,21 +15,73 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const moviesRes = await axios.get(`${baseUrl}/movie`);
-      const reviewsRes = await axios.get(`${baseUrl}/review/get`);
+      setLoading(true);
 
-      setMovies(moviesRes.data);
-      setReviews(reviewsRes.data);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Fetch movies and reviews
+      const [moviesRes, reviewsRes] = await Promise.all([
+        axios.get(`${baseUrl}/movie/get`, config),
+        axios.get(`${baseUrl}/review/get`, config),
+      ]);
+
+      const adminMovies = moviesRes.data || [];
+      const allReviews = reviewsRes.data || [];
+
+      const adminMovieIds = adminMovies.map((m) => m._id);
+      const adminReviews = allReviews.filter((r) =>
+        adminMovieIds.includes(r.movieId?._id || r.movieId)
+      );
+
+      setMovies(adminMovies);
+      setReviews(adminReviews);
     } catch (error) {
       console.error("Dashboard API error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleEdit = (movieId) => {
+    console.log("Edit movie:", movieId);
+  };
+
+  const handleDelete = async (movieId) => {
+    if (!window.confirm("Are you sure you want to delete this movie?")) return;
+
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios.delete(`${baseUrl}/movie/delete/${movieId}`, config);
+      // Remove movie from state
+      setMovies((prev) => prev.filter((m) => m._id !== movieId));
+      setReviews((prev) =>
+        prev.filter((r) => r.movieId?._id !== movieId && r.movieId !== movieId)
+      );
+    } catch (error) {
+      console.error("Delete movie error:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="p-6 text-white mt-10 bg-black text-center">
+        Loading dashboard...
+      </div>
+    );
+  }
+
   return (
-    <div className="p-6 text-white mt-10 bg-black">
+    <div className="p-6 text-white mt-10 bg-black min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3  gap-6 mb-10">
+      {/* Top Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 rounded-xl">
           <h3 className="text-lg">Movies</h3>
           <p className="text-4xl font-bold">{movies.length}</p>
@@ -43,38 +98,50 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Movies List */}
       <h2 className="text-2xl font-semibold mb-4">Top Content</h2>
 
-      <div className="space-y-4">
-        {movies.map((movie) => (
-          <div
-            key={movie._id}
-            className="flex items-center justify-between bg-[#111] p-4 rounded-lg hover:bg-[#1a1a1a]"
-          >
-            <div className="flex items-center gap-4">
-              <img
-                src={movie.posterImage || "https://via.placeholder.com/60x80"}
-                alt={movie.movieName}
-                className="w-14 h-20 object-cover rounded"
-              />
-              <div>
-                <h3 className="font-semibold">{movie.movieName}</h3>
-                <p className="text-sm text-gray-400">{movie.releaseDate}</p>
-                <p className="text-sm text-gray-400">{movie.country}</p>
-              </div>
-            </div>
+      {movies.length === 0 ? (
+        <p className="text-gray-400">No movies added yet.</p>
+      ) : (
+        <div className="space-y-4">
+          {movies.map((movie) => {
+            const reviewCount = reviews.filter(
+              (r) => r.movieId === movie._id || r.movieId?._id === movie._id
+            ).length;
 
-            <div className="text-white font-bold">
-              Reviews :{" "}
-              {
-                reviews.filter(
-                  (r) => r.movieId === movie._id || r.movieId?._id === movie._id
-                ).length
-              }
-            </div>
-          </div>
-        ))}
-      </div>
+            return (
+              <div
+                key={movie._id}
+                className="flex items-center justify-between bg-[#111] p-4 rounded-lg hover:bg-[#1a1a1a]"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={
+                      movie.posterImage || "https://via.placeholder.com/60x80"
+                    }
+                    alt={movie.movieName}
+                    className="w-14 h-20 object-cover rounded"
+                  />
+                  <div>
+                    <h3 className="font-semibold">{movie.movieName}</h3>
+                    <p className="text-sm text-gray-400">
+                      {new Date(movie.releaseDate).toLocaleDateString()}
+                    </p>
+                    <p className="text-sm text-gray-400">{movie.country}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="text-white font-bold">
+                    Reviews: {reviewCount}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
