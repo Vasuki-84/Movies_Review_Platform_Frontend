@@ -27,7 +27,7 @@ export default function Reviews() {
 
   const fetchMovie = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/movie/${movieId}`);
+      const res = await axios.get(`${baseUrl}/movie/get/${movieId}`);
       setMovie(res.data);
     } catch (error) {
       toast.error("Failed to load movie");
@@ -99,15 +99,14 @@ export default function Reviews() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 md:p-10 mt-20 flex justify-center relative">
-      <button
-        onClick={() => navigate("/")}
-        className="absolute top-5 left-8 bg-blue-700 px-4 py-2 rounded"
-      >
-        ← Back
-      </button>
-
-      <div className="max-w-3xl w-full bg-[#111] rounded-xl shadow-xl overflow-hidden">
+    <div className="min-h-screen bg-black text-white p-4 md:p-10  flex justify-center relative">
+      <div className="max-w-3xl w-full bg-[#111]  shadow-xl overflow-hidden mt-20">
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-5 left-8 bg-blue-700 px-4 py-2 rounded mt-28"
+        >
+          ← Back
+        </button>
         <img
           src={movie.posterImage || "https://via.placeholder.com/300x450"}
           alt={movie.movieName}

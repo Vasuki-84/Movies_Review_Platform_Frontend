@@ -21,7 +21,7 @@ function Home() {
 
   const fetchMovies = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/movie`);
+      const res = await axios.get(`${baseUrl}/movie/public`);
       setMovies(res.data);
     } catch (error) {
       console.error("Fetch movies error:", error);
@@ -42,7 +42,7 @@ function Home() {
     ),
   ];
 
-  const genres = [...new Set(movies.map((m) => m.genre).filter(Boolean))];
+  const genres = [...new Set(movies.map((m) => m.genres).filter(Boolean))];
   const languages = [...new Set(movies.map((m) => m.language).filter(Boolean))];
 
   const filteredMovies = movies.filter((movie) => {
@@ -57,7 +57,7 @@ function Home() {
     return (
       matchesSearch &&
       (!year || movieYear === year) &&
-      (!genre || movie.genre === genre) &&
+      (!genre || movie.genres === genre) &&
       (!language || movie.language === language)
     );
   });

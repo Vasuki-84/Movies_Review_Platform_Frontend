@@ -46,28 +46,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleEdit = (movieId) => {
-    console.log("Edit movie:", movieId);
-  };
-
-  const handleDelete = async (movieId) => {
-    if (!window.confirm("Are you sure you want to delete this movie?")) return;
-
-    try {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      await axios.delete(`${baseUrl}/movie/delete/${movieId}`, config);
-      // Remove movie from state
-      setMovies((prev) => prev.filter((m) => m._id !== movieId));
-      setReviews((prev) =>
-        prev.filter((r) => r.movieId?._id !== movieId && r.movieId !== movieId)
-      );
-    } catch (error) {
-      console.error("Delete movie error:", error);
-    }
-  };
-
   if (loading) {
     return (
       <div className="p-6 text-white mt-10 bg-black text-center">
