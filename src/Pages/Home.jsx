@@ -7,6 +7,10 @@ import HeroSection from "./HeroSection";
 function Home() {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
+
+  const canReview = isLoggedIn && role === "user";
 
   const [movies, setMovies] = useState([]);
   const [year, setYear] = useState("");
@@ -15,9 +19,21 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
+  const roleBasedMovies =
+    isLoggedIn && role === "admin"
+      ? movies.filter(
+          (movie) => movie.createdBy && movie.createdBy.toString() === userId
+        )
+      : movies;
+
   useEffect(() => {
     fetchMovies();
   }, []);
+  console.log("ADMIN userId:", userId);
+
+  movies.forEach((m) => {
+    console.log("movie.createdBy:", m.createdBy, typeof m.createdBy);
+  });
 
   const fetchMovies = async () => {
     try {
@@ -32,7 +48,7 @@ function Home() {
 
   const years = [
     ...new Set(
-      movies
+      roleBasedMovies
         .map((m) =>
           m.releaseDate
             ? new Date(m.releaseDate).getFullYear().toString()
@@ -41,11 +57,15 @@ function Home() {
         .filter(Boolean)
     ),
   ];
+  const genres = [
+    ...new Set(roleBasedMovies.map((m) => m.genres).filter(Boolean)),
+  ];
 
-  const genres = [...new Set(movies.map((m) => m.genres).filter(Boolean))];
-  const languages = [...new Set(movies.map((m) => m.language).filter(Boolean))];
+  const languages = [
+    ...new Set(roleBasedMovies.map((m) => m.language).filter(Boolean)),
+  ];
 
-  const filteredMovies = movies.filter((movie) => {
+  const filteredMovies = roleBasedMovies.filter((movie) => {
     const movieYear = movie.releaseDate
       ? new Date(movie.releaseDate).getFullYear().toString()
       : "";
@@ -133,10 +153,10 @@ function Home() {
             <div
               key={movie._id}
               className={`relative group w-[200px]
-                ${isLoggedIn ? "cursor-pointer" : "cursor-default"}
+                ${canReview ? "cursor-pointer" : "cursor-default"}
               `}
               onClick={() => {
-                if (isLoggedIn) {
+                if (canReview) {
                   navigate(`/review/${movie._id}`);
                 }
               }}
@@ -170,13 +190,19 @@ function Home() {
                     Login to add reviews
                   </p>
                 )}
+
+                {isLoggedIn && role === "admin" && (
+                  <p className="text-xs text-yellow-400 mt-1"></p>
+                )}
               </div>
             </div>
           ))}
 
           {!filteredMovies.length && (
             <p className="text-gray-400 col-span-full text-center mt-10">
-              No movies found
+              {role === "admin"
+                ? "You haven't added any movies yet"
+                : "No movies found"}
             </p>
           )}
         </div>

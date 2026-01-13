@@ -16,7 +16,7 @@ export default function UpdateMovie() {
   // Fetch movie
   const fetchMovies = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/movie/get`, {
+      const res = await axios.get(`${baseUrl}/movie/admin`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { baseUrl } from "../api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
@@ -27,6 +27,7 @@ function Login() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", user.role);
+      localStorage.setItem("userId", user.id);
 
       toast.success(" Login successful!", {
         position: "top-right",
