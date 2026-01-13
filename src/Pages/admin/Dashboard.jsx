@@ -25,9 +25,11 @@ export default function Dashboard() {
 
       // Fetch movies and reviews
       const [moviesRes, reviewsRes] = await Promise.all([
-        axios.get(`${baseUrl}/movie/get`, config),
+        axios.get(`${baseUrl}/movie/admin`, config),
         axios.get(`${baseUrl}/review/get`, config),
       ]);
+      console.log("Admin movies response:", moviesRes.data);
+      console.log("Reviews response:", reviewsRes.data);
 
       const adminMovies = moviesRes.data || [];
       const allReviews = reviewsRes.data || [];

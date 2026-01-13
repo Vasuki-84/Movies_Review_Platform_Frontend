@@ -15,7 +15,7 @@ import Dashboard from "./Pages/admin/Dashboard";
 import CreateMovie from "./Pages/admin/CreateMovie";
 import UpdateMovie from "./Pages/admin/UpdateMovie";
 import UpdateMovieForm from "./Pages/admin/UpdateMovieForm";
-
+import AdminReviews from "./Pages/admin/AdminReviews";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,11 +37,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="create" element={<CreateMovie />} />
           <Route path="update" element={<UpdateMovie />} />
-
-          <Route
-            path="/admin/layout/update/:id"
-            element={<UpdateMovieForm />}
-          />
+          <Route path="reviews" element={<AdminReviews />} />
+          <Route path="update/:id" element={<UpdateMovieForm />} />
         </Route>
       </Routes>
 
