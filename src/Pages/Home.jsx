@@ -22,18 +22,18 @@ function Home() {
   const roleBasedMovies =
     isLoggedIn && role === "admin"
       ? movies.filter(
-          (movie) => movie.createdBy && movie.createdBy.toString() === userId
+          (movie) => movie.createdBy && movie.createdBy.toString() === userId,
         )
       : movies;
 
   useEffect(() => {
     fetchMovies();
   }, []);
-  console.log("ADMIN userId:", userId);
+  // console.log("ADMIN userId:", userId);
 
-  movies.forEach((m) => {
-    console.log("movie.createdBy:", m.createdBy, typeof m.createdBy);
-  });
+  // movies.forEach((m) => {
+  //   console.log("movie.createdBy:", m.createdBy, typeof m.createdBy);
+  // });
 
   const fetchMovies = async () => {
     try {
@@ -52,9 +52,9 @@ function Home() {
         .map((m) =>
           m.releaseDate
             ? new Date(m.releaseDate).getFullYear().toString()
-            : null
+            : null,
         )
-        .filter(Boolean)
+        .filter(Boolean),
     ),
   ];
   const genres = [
@@ -85,16 +85,20 @@ function Home() {
   return (
     <div className="bg-black min-h-screen py-6 text-white">
       <HeroSection />
-      <div className="flex justify-center px-20 mt-6">
+      <div className="flex justify-center px-2 sm:px-2 md:px-4 mt-6">
         <input
           type="text"
           placeholder="Search movies..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="
-      w-full sm:w-[800px]
+           w-full
+      sm:w-[150px]
+      md:w-[600px]
+      lg:w-[800px]
       bg-gray-800 text-white
-      px-4 py-2
+      px-3 sm:px-2
+      py-2 sm:py-2.5
       rounded-lg
       outline-none
       focus:ring-2 focus:ring-red-500
@@ -102,7 +106,23 @@ function Home() {
         />
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-center mt-10 mb-8 px-4">
+      <div
+        className="   flex
+    flex-wrap
+    gap-3
+    sm:gap-4
+    md:gap-5
+    lg:gap-6
+    justify-center
+    mt-6
+    sm:mt-8
+    md:mt-10
+    mb-6
+    px-2
+    sm:px-4
+    md:px-6
+    lg:px-8"
+      >
         <select
           value={year}
           onChange={(e) => setYear(e.target.value)}
@@ -148,11 +168,17 @@ function Home() {
       )}
 
       {!loading && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center px-4">
+        <div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center px-3
+"
+        >
           {filteredMovies.map((movie) => (
             <div
               key={movie._id}
-              className={`relative group w-[200px]
+              className={`  relative group
+  w-full
+  sm:w-[180px]
+  md:w-[200px]
                 ${canReview ? "cursor-pointer" : "cursor-default"}
               `}
               onClick={() => {
@@ -164,7 +190,11 @@ function Home() {
               <img
                 src={movie.posterImage || "https://via.placeholder.com/300x450"}
                 alt={movie.movieName}
-                className="rounded-lg w-full h-[300px] object-cover
+                className=" rounded-lg w-full
+  h-[220px]
+  sm:h-[260px]
+  md:h-[300px]
+  object-cover
                   transition duration-300 group-hover:scale-105"
               />
 

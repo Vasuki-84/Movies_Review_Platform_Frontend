@@ -30,38 +30,38 @@ export default function UpdateMovie() {
 
   // Delete Movie
   const deleteMovie = async (id) => {
-     toast.error(
-    ({ closeToast }) => (
-      <div>
-        <p className="font-semibold mb-2">
-          Are you sure you want to delete this movie?
-        </p>
-        <div className="flex gap-2">
-          <button
-            onClick={async () => {
-              closeToast();
-              await confirmDelete(id);
-            }}
-            className="bg-red-600 px-3 py-1 rounded text-white text-sm"
-          >
-            Yes, Delete
-          </button>
+    toast.error(
+      ({ closeToast }) => (
+        <div>
+          <p className="font-semibold mb-2">
+            Are you sure you want to delete this movie?
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={async () => {
+                closeToast();
+                await confirmDelete(id);
+              }}
+              className="bg-red-600 px-3 py-1 rounded text-white text-sm"
+            >
+              Yes, Delete
+            </button>
 
-          <button
-            onClick={closeToast}
-            className="bg-gray-600 px-3 py-1 rounded text-white text-sm"
-          >
-            Cancel
-          </button>
+            <button
+              onClick={closeToast}
+              className="bg-gray-600 px-3 py-1 rounded text-white text-sm"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      </div>
-    ),
-    {
-      position: "top-right",
-      autoClose: false,
-      closeOnClick: false,
-    }
-  );
+      ),
+      {
+        position: "top-right",
+        autoClose: false,
+        closeOnClick: false,
+      }
+    );
     try {
       await axios.delete(`${baseUrl}/movie/delete/${id}`, {
         headers: {
@@ -72,7 +72,7 @@ export default function UpdateMovie() {
       setMovies((prev) => prev.filter((movie) => movie._id !== id));
     } catch (error) {
       console.error("Delete movie error:", error);
-        toast.error("Failed to delete movie", {
+      toast.error("Failed to delete movie", {
         position: "top-right",
         autoClose: 3000,
       });
