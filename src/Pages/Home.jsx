@@ -148,8 +148,8 @@ function Home() {
             </option>
           ))}
         </select>
-
-        {/* <select
+        {/* 
+        <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           className="bg-gray-800 text-white px-4 py-2 rounded outline-none focus:ring-2 focus:ring-red-500"

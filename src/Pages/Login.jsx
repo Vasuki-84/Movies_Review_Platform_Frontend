@@ -38,7 +38,7 @@ function Login() {
         if (user.role === "admin") {
           navigate("/admin/layout");
         } else {
-          navigate("/review/:id");
+          navigate("/");
         }
       }, 2000);
     } catch (err) {
