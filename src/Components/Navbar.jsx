@@ -30,19 +30,22 @@ function Navbar() {
           <span className="text-red-600">CINE</span>BUZZ
         </h1>
 
-        <ul className="hidden md:flex items-center gap-8 text-sm font-semibold">
-          <li>
+        <ul className="hidden md:flex items-center gap-8 text-sm font-bold">
+          <li className="hover:text-red-500 cursor-pointer">
             <Link to="/" className="text-red-500">
-              HOME
+              Home
             </Link>
           </li>
-          <li>
-            <Link to="/movies" className="hover:text-red-500">
-              MOVIES
+          <li className="hover:text-red-500 cursor-pointer">
+            <Link to="/hollywood" className="hover:text-red-500">
+              Hollywood 
             </Link>
           </li>
-          <li className="hover:text-red-500 cursor-pointer">TV SERIES</li>
-         
+          <li className="hover:text-red-500 cursor-pointer">
+            <Link to="/kollywood" className="hover:text-red-500">
+              Kollywood 
+            </Link>
+          </li>
         </ul>
 
         {!isLoggedIn ? (

@@ -121,7 +121,7 @@ function Home() {
     px-2
     sm:px-4
     md:px-6
-    lg:px-8"
+    lg:px-8 my-20"
       >
         <select
           value={year}
@@ -149,7 +149,7 @@ function Home() {
           ))}
         </select>
 
-        <select
+        {/* <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           className="bg-gray-800 text-white px-4 py-2 rounded outline-none focus:ring-2 focus:ring-red-500"
@@ -160,7 +160,7 @@ function Home() {
               {l}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
 
       {loading && (

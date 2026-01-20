@@ -4,10 +4,11 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 
 import Home from "./Pages/Home";
-import MovieDetails from "./Pages/MovieDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import Reviews from "./Pages/Reviews";
+import Hollywood from "./Pages/hollywood";
+import Kollywood from "./Pages/kollywood";
 
 // Admin pages & layout
 import AdminLayout from "./Pages/admin/AdminLayout";
@@ -19,6 +20,7 @@ import AdminReviews from "./Pages/admin/AdminReviews";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 function App() {
   return (
     <div>
@@ -27,7 +29,8 @@ function App() {
       <Routes>
         {/* USER ROUTES */}
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<MovieDetails />} />
+        <Route path="/kollywood" element={<Kollywood />} />
+        <Route path="/hollywood" element={<Hollywood />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/review/:id" element={<Reviews />} />
