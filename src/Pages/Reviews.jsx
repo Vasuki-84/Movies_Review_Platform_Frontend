@@ -38,7 +38,7 @@ export default function Reviews() {
     try {
       const res = await axios.get(`${baseUrl}/review/get`);
       const filtered = res.data.filter(
-        (r) => r.movieId === movieId || r.movieId?._id === movieId
+        (r) => r.movieId === movieId || r.movieId?._id === movieId,
       );
       setReviews(filtered);
     } catch (error) {
@@ -72,7 +72,7 @@ export default function Reviews() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       toast.success("Review added successfully!");
@@ -115,18 +115,32 @@ export default function Reviews() {
 
         <div className="p-6">
           <h1 className="text-3xl font-bold">{movie.movieName}</h1>
-          <p className="text-gray-400 mt-1">
-            {movie.releaseDate
-              ? new Date(movie.releaseDate).getFullYear()
-              : "N/A"}{" "}
-            • {movie.genres} • {movie.language}
-          </p>
+
+          <div className="flex flex-wrap items-center gap-2 mt-5 text-xs sm:text-sm">
+            {/* Year */}
+            <span className="bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded-full font-medium">
+              {movie.releaseDate
+                ? new Date(movie.releaseDate).getFullYear()
+                : "N/A"}
+            </span>
+
+            {/* Genre */}
+            <span className="bg-purple-600/20 text-purple-400 px-2 py-0.5 rounded-full font-medium">
+              {movie.genres}
+            </span>
+
+            {/* Language */}
+            <span className="bg-green-600/20 text-green-400 px-2 py-0.5 rounded-full font-medium">
+              {movie.language}
+            </span>
+          </div>
+
           <p className="mt-3 text-sm text-gray-300">{movie.description}</p>
         </div>
 
         {/* ADD REVIEW */}
         <div className="p-6 border-t border-gray-700">
-          {/* ⭐ Rating */}
+          {/*  Rating */}
           <select
             value={rating}
             onChange={(e) => setRating(Number(e.target.value))}
@@ -144,7 +158,15 @@ export default function Reviews() {
             placeholder="Write your review..."
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            className="w-full p-3 rounded bg-[#1a1a1a] text-white outline-none"
+            className="
+    w-full p-3 rounded
+    bg-[#1a1a1a] text-white
+    outline-none
+    border border-transparent
+    hover:border-blue-500
+    focus:border-blue-500
+    transition-colors duration-200
+  "
           />
 
           <button

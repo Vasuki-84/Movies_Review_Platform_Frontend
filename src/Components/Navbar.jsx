@@ -38,12 +38,12 @@ function Navbar() {
           </li>
           <li className="hover:text-red-500 cursor-pointer">
             <Link to="/hollywood" className="hover:text-red-500">
-              Hollywood 
+              Hollywood
             </Link>
           </li>
           <li className="hover:text-red-500 cursor-pointer">
             <Link to="/kollywood" className="hover:text-red-500">
-              Kollywood 
+              Kollywood
             </Link>
           </li>
         </ul>
@@ -79,52 +79,69 @@ function Navbar() {
           className="md:hidden text-2xl"
           onClick={() => setIsOpen(!isOpen)}
         >
-          ☰
+          {isOpen ? "✕" : "☰"}
         </button>
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-black/90 text-white px-6 py-6 space-y-4">
-          <Link to="/" onClick={() => setIsOpen(false)} className="block">
-            HOME
-          </Link>
-          <Link to="/movies" onClick={() => setIsOpen(false)} className="block">
-            MOVIES
-          </Link>
-          <span className="block">TV SERIES</span>
-          <span className="block">SEARCH</span>
-
-          {!isLoggedIn ? (
+        <div className="md:hidden fixed top-16 left-0 w-full bg-black/95 text-white z-50">
+          <div className="flex flex-col items-center space-y-5 py-6 px-4">
             <Link
-              to="/login"
+              to="/"
               onClick={() => setIsOpen(false)}
-              className="block bg-red-600 text-center py-2 rounded-md font-semibold"
+              className="text-lg font-semibold hover:text-red-500"
             >
-              LOG IN
+              HOME
             </Link>
-          ) : (
-            <div className="space-y-2">
-              <button
-                onClick={() => {
-                  handleUserButton();
-                  setIsOpen(false);
-                }}
-                className="block w-full bg-blue-600 py-2 rounded-md font-semibold"
-              >
-                {username || (role === "admin" ? "Admin" : "User")}
-              </button>
 
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                className="block w-full bg-red-600 py-2 rounded-md font-semibold"
+            <Link
+              to="/hollywood"
+              onClick={() => setIsOpen(false)}
+              className="text-lg font-semibold hover:text-red-500"
+            >
+              Hollywood
+            </Link>
+
+            <Link
+              to="/kollywood"
+              onClick={() => setIsOpen(false)}
+              className="text-lg font-semibold hover:text-red-500"
+            >
+              Kollywood
+            </Link>
+
+            {!isLoggedIn ? (
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="w-full max-w-xs text-center bg-red-600 py-3 rounded-lg font-semibold"
               >
-                LOGOUT
-              </button>
-            </div>
-          )}
+                LOG IN
+              </Link>
+            ) : (
+              <div className="w-full max-w-xs space-y-3">
+                <button
+                  onClick={() => {
+                    handleUserButton();
+                    setIsOpen(false);
+                  }}
+                  className="w-full bg-blue-600 py-3 rounded-lg font-semibold"
+                >
+                  {username || (role === "admin" ? "Admin" : "User")}
+                </button>
+
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="w-full bg-red-600 py-3 rounded-lg font-semibold"
+                >
+                  LOGOUT
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </nav>

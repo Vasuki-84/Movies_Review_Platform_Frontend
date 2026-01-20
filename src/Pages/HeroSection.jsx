@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 const movies = [
   {
@@ -12,13 +11,13 @@ const movies = [
       "After cracking the biggest case in Zootopia's history, rookie cops Judy Hopps and Nick Wilde find themselves on a twisting trail of a great mystery...",
   },
   {
-    title: "Kung Fu Panda 4",
+    title: "Jana Nayagan",
     image:
-      "https://i.pinimg.com/736x/c2/b0/16/c2b0167a06c36fd1396e90a625599ea0.jpg",
+      "https://i.pinimg.com/1200x/7d/fe/d2/7dfed2e5ff26c1d9667c4a4de99d2263.jpg",
     rating: "7.8",
-    genres: ["Animation", "Action"],
+    genres: ["Action", "Political", "Drama"],
     description:
-      "Po prepares to become the spiritual leader of the Valley of Peace, but must find and train a new Dragon Warrior.",
+      "A high-octane political action entertainer starring Vijay as a charismatic leader fighting for justice and the people, blending mass action with a message‑driven narrative.",
   },
   {
     title: "Inside Out 2",
@@ -75,11 +74,6 @@ function HeroSection() {
           <p className="text-gray-300 text-sm leading-relaxed mb-6">
             {movie.description}
           </p>
-
-          <button className="flex items-center gap-2 bg-red-600 px-6 py-3 rounded-md font-semibold transition hover:bg-black/40 hover:backdrop-blur-md hover:text-white cursor-pointer">
-            <ChevronDoubleRightIcon className="h-4 w-4 text-gray-600"  /> WATCH
-            NOW
-          </button>
         </div>
       </div>
 

@@ -36,7 +36,7 @@ export default function Dashboard() {
 
       const adminMovieIds = adminMovies.map((m) => m._id);
       const adminReviews = allReviews.filter((r) =>
-        adminMovieIds.includes(r.movieId?._id || r.movieId)
+        adminMovieIds.includes(r.movieId?._id || r.movieId),
       );
 
       setMovies(adminMovies);
@@ -87,33 +87,41 @@ export default function Dashboard() {
         <div className="space-y-4">
           {movies.map((movie) => {
             const reviewCount = reviews.filter(
-              (r) => r.movieId === movie._id || r.movieId?._id === movie._id
+              (r) => r.movieId === movie._id || r.movieId?._id === movie._id,
             ).length;
 
             return (
               <div
                 key={movie._id}
-                className="flex items-center justify-between bg-[#111] p-4 rounded-lg hover:bg-[#1a1a1a]"
+                className="  bg-[#111] p-4 rounded-lg
+          hover:bg-[#1a1a1a]
+          flex flex-col sm:flex-row
+          sm:items-center sm:justify-between
+          gap-4"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-start sm:items-center gap-4">
                   <img
                     src={
                       movie.posterImage || "https://via.placeholder.com/60x80"
                     }
                     alt={movie.movieName}
-                    className="w-14 h-20 object-cover rounded"
+                    className="w-12 h-16 sm:w-14 sm:h-20 object-cover rounded"
                   />
-                  <div>
-                    <h3 className="font-semibold">{movie.movieName}</h3>
-                    <p className="text-sm text-gray-400">
+                  <div className="space-y-1">
+                    <h3 className="font-semibold text-sm sm:text-base break-words">
+                      {movie.movieName}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-400">
                       {new Date(movie.releaseDate).toLocaleDateString()}
                     </p>
-                    <p className="text-sm text-gray-400">{movie.country}</p>
+                    <p className="text-xs sm:text-sm text-gray-400">
+                      {movie.country}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <span className="text-white font-bold">
+                <div className="flex justify-end sm:justify-center">
+                  <span className="text-sm sm:text-base font-bold bg-yellow-600/20 text-yellow-500 px-3 py-1 rounded-full">
                     Reviews: {reviewCount}
                   </span>
                 </div>
