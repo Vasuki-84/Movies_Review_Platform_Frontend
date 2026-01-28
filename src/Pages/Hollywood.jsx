@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { baseUrl } from "../api";
+import baseUrl from "../api";
 import HeroSection from "./HeroSection";
 
 function Hollywood() {

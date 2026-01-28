@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { baseUrl } from "../api";
+import baseUrl from "../api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";

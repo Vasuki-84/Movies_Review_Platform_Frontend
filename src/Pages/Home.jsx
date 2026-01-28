@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { baseUrl } from "../api";
+import  baseUrl from "../api";
 import HeroSection from "./HeroSection";
 
 function Home() {
@@ -29,13 +29,9 @@ function Home() {
   useEffect(() => {
     fetchMovies();
   }, []);
-  // console.log("ADMIN userId:", userId);
-
-  // movies.forEach((m) => {
-  //   console.log("movie.createdBy:", m.createdBy, typeof m.createdBy);
-  // });
-
+  
   const fetchMovies = async () => {
+    console.log(" baseUrl :", baseUrl);
     try {
       const res = await axios.get(`${baseUrl}/movie/public`);
       setMovies(res.data);

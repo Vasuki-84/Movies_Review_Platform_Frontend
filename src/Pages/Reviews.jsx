@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { baseUrl } from "../api";
+import baseUrl from "../api";
 import { toast } from "react-toastify";
 
 export default function Reviews() {

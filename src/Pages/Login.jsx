@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { baseUrl } from "../api";
+import baseUrl from "../api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

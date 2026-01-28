@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { baseUrl } from "../../api";
+import baseUrl from "../../api";
 
 export default function Dashboard() {
   const [movies, setMovies] = useState([]);
