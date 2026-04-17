@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+   console.log("Navbar rendered");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -148,4 +149,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default React.memo(Navbar);

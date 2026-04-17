@@ -3,6 +3,10 @@ import HeroSection from "./HeroSection";
 import React, { useState } from "react";
 import useMovies from "../hooks/useMovies";
 
+import MovieCard from "../Components/MovieCard";
+
+import useDebounce from "../hooks/useDebounce";
+
 function Home() {
   const navigate = useNavigate();
 
@@ -20,6 +24,10 @@ function Home() {
   const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
+
+  console.log("search:", search);
+console.log("debounced:", debouncedSearch);
 
   const roleBasedMovies =
     isLoggedIn && role === "admin"
@@ -45,9 +53,9 @@ function Home() {
     ...new Set(roleBasedMovies.map((m) => m.genres).filter(Boolean)),
   ];
 
-  const languages = [
-    ...new Set(roleBasedMovies.map((m) => m.language).filter(Boolean)),
-  ];
+  // const languages = [
+  //   ...new Set(roleBasedMovies.map((m) => m.language).filter(Boolean)),
+  // ];
 
   const filteredMovies = roleBasedMovies.filter((movie) => {
     const movieYear = movie.releaseDate
@@ -56,7 +64,7 @@ function Home() {
 
     const matchesSearch = movie.movieName
       ?.toLowerCase()
-      .includes(search.toLowerCase());
+     .includes(debouncedSearch.toLowerCase());
 
     return (
       matchesSearch &&
@@ -156,7 +164,7 @@ function Home() {
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center px-3
 "
         >
-          {filteredMovies.map((movie) => (
+          {/* {filteredMovies.map((movie) => (
             <div
               key={movie._id}
               className={`  relative group
@@ -210,8 +218,18 @@ function Home() {
                 )}
               </div>
             </div>
-          ))}
+          ))} */}
 
+{filteredMovies.map((movie) => (
+  <MovieCard
+    key={movie._id}
+    movie={movie}
+    canReview={canReview}
+    navigate={navigate}
+    isLoggedIn={isLoggedIn}
+    role={role}
+  />
+))}
           {!filteredMovies.length && (
             <p className="text-gray-400 col-span-full text-center mt-10">
               {role === "admin"

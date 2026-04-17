@@ -1,14 +1,18 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 
-import Home from "./Pages/Home";
-import Register from "./Pages/Register";
-import Login from "./Pages/Login";
-import Reviews from "./Pages/Reviews";
-import Hollywood from "./Pages/hollywood";
-import Kollywood from "./Pages/kollywood";
+// lazy loading 
+const Home = lazy(() => import("./pages/Home"));
+const Kollywood = lazy(() => import("./pages/Kollywood"));
+const Hollywood = lazy(() => import("./pages/Hollywood"));
+const Register = lazy(() => import("./Pages/Register"));
+const Login = lazy(() => import("./Pages/Login"));
+const Reviews = lazy(() => import("./Pages/Reviews"));
+
+
+
 
 // Admin pages & layout
 import AdminLayout from "./Pages/admin/AdminLayout";
@@ -25,25 +29,25 @@ function App() {
   return (
     <div>
       <Navbar />
+  <Suspense fallback={<p>Loading...</p>}>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/kollywood" element={<Kollywood />} />
+    <Route path="/hollywood" element={<Hollywood />} />
 
-      <Routes>
-        {/* USER ROUTES */}
-        <Route path="/" element={<Home />} />
-        <Route path="/kollywood" element={<Kollywood />} />
-        <Route path="/hollywood" element={<Hollywood />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/review/:id" element={<Reviews />} />
+    <Route path="/register" element={<Register />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/review/:id" element={<Reviews />} />
 
-        {/* ADMIN ROUTES  */}
-        <Route path="/admin/layout" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="create" element={<CreateMovie />} />
-          <Route path="update" element={<UpdateMovie />} />
-          <Route path="reviews" element={<AdminReviews />} />
-          <Route path="update/:id" element={<UpdateMovieForm />} />
-        </Route>
-      </Routes>
+    <Route path="/admin/layout" element={<AdminLayout />}>
+      <Route index element={<Dashboard />} />
+      <Route path="create" element={<CreateMovie />} />
+      <Route path="update" element={<UpdateMovie />} />
+      <Route path="reviews" element={<AdminReviews />} />
+      <Route path="update/:id" element={<UpdateMovieForm />} />
+    </Route>
+  </Routes>
+</Suspense>
 
       <Footer />
 
