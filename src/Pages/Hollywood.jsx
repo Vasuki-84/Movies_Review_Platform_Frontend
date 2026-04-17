@@ -1,50 +1,24 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import baseUrl from "../api";
 import HeroSection from "./HeroSection";
+
+import React, { useState } from "react";
+import useMovies from "../hooks/useMovies";
 
 function Hollywood() {
   const navigate = useNavigate();
+const { movies, loading } = useMovies();
+
   const isLoggedIn = !!localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const userId = localStorage.getItem("userId");
 
   const canReview = isLoggedIn && role === "user";
 
-  const [movies, setMovies] = useState([]);
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    fetchMovies();
-  }, []);
-
-  const fetchMovies = async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/movie/public`);
-
-      const tamilMovies = res.data.filter(
-        (movie) => movie.language === "English",
-      );
-
-      const roleBasedMovies =
-        isLoggedIn && role === "admin"
-          ? tamilMovies.filter(
-              (movie) =>
-                movie.createdBy && movie.createdBy.toString() === userId,
-            )
-          : tamilMovies;
-
-      setMovies(roleBasedMovies);
-    } catch (error) {
-      console.error("Fetch movies error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
   const years = [
     ...new Set(

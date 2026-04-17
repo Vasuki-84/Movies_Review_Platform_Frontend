@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import  baseUrl from "../api";
 import HeroSection from "./HeroSection";
+import React, { useState } from "react";
+import useMovies from "../hooks/useMovies";
 
 function Home() {
   const navigate = useNavigate();
+
+  const { movies, loading } = useMovies();
+
+  console.log("Movies in Home:", movies);
+
   const isLoggedIn = !!localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const userId = localStorage.getItem("userId");
 
   const canReview = isLoggedIn && role === "user";
 
-  const [movies, setMovies] = useState([]);
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
   const roleBasedMovies =
@@ -26,21 +28,7 @@ function Home() {
         )
       : movies;
 
-  useEffect(() => {
-    fetchMovies();
-  }, []);
-  
-  const fetchMovies = async () => {
-    console.log(" baseUrl :", baseUrl);
-    try {
-      const res = await axios.get(`${baseUrl}/movie/public`);
-      setMovies(res.data);
-    } catch (error) {
-      console.error("Fetch movies error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
   const years = [
     ...new Set(
